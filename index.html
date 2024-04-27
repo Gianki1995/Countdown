@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>countdown</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section id="countdown">
+        Evento il 27 aprile 2025 ore 14:30
+        <div id="time">
+            <div>
+                <span>0</span>
+                giorni
+            </div>
+            <div>
+                <span>0</span>
+                ore
+            </div>
+            <div>
+                <span>0</span>
+                minuti
+            </div>
+            <div>
+                <span>0</span>
+                secondi
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+
+        const indicatori = document.querySelectorAll('#time span');
+        const scadenza = new Date(2025, 3, 27, 14, 30, 0);
+        const msScadenza = scadenza.getTime();
+        const msInGiorno = 24 * 60 * 60 * 1000
+        const msInOra = 60 * 60 * 1000
+        const msInMinuto = 60 * 1000;
+
+        function countdown() {
+            const dataCorrente = new Date();
+            const msCorrente = dataCorrente.getTime();
+            const msRimanenti = msScadenza - msCorrente;
+
+            let giorni = Math.floor(msRimanenti / msInGiorno)
+            let ore = Math.floor((msRimanenti % msInGiorno) / msInOra)
+            let minuti = Math.floor((msRimanenti % msInOra) / msInMinuto)
+            let secondi = Math.floor((msRimanenti % msInMinuto) / 1000)
+
+            let time = [giorni, ore, minuti, secondi]
+
+            if (msRimanenti <= 0) {
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            indicatori.forEach((span, index) => {
+                span.textContent = time[index]
+            })
+        }
+
+        const countdownInterval = setInterval(countdown, 1000)
+        countdown()
+
+    </script>
+</body>
+
+</html>
